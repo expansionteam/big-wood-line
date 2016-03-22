@@ -14,8 +14,6 @@ class IvrController extends Controller
         $this->_thankYouMessage = 'Thank you for calling the ET Phone Home' .
                                   ' Service - the adventurous alien\'s first choice' .
                                   ' in intergalactic travel.';
-
-        $this->beforeFilter('@checkForStar');
     }
 
     /**
@@ -37,18 +35,22 @@ class IvrController extends Controller
      */
     public function showWelcome()
     {
-        $response = new Services_Twilio_Twiml;
-        $gather = $response->gather(
-            ['numDigits' => 1,
-             'action' => route('menu-response', [], false)]
-        );
+        if ($request->input('Digits') === '*') {
+            return redirect()->route('welcome');
+        } else {
+            $response = new Services_Twilio_Twiml;
+            $gather = $response->gather(
+                ['numDigits' => 1,
+                 'action' => route('menu-response', [], false)]
+            );
 
-        $gather->play(
-            'https://dl.dropboxusercontent.com/s/5zorjps57w45sre/roy_intro.mp3',
-            ['loop' => 3]
-        );
+            $gather->play(
+                'https://dl.dropboxusercontent.com/s/5zorjps57w45sre/roy_intro.mp3',
+                ['loop' => 3]
+            );
 
-        return $response;
+            return $response;
+        }
     }
 
     /**
