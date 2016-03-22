@@ -33,7 +33,7 @@ class IvrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showWelcome()
+    public function showWelcome(Request $request)
     {
         if ($request->input('Digits') === '*') {
             return redirect()->route('welcome');
