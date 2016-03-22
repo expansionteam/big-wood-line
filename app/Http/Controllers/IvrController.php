@@ -41,7 +41,7 @@ class IvrController extends Controller
             $response = new Services_Twilio_Twiml;
             $gather = $response->gather(
                 ['numDigits' => 1,
-                 'action' => route('menu-response', [], false)]
+                 'action' => 'https://enigmatic-castle-81076.herokuapp.com/index.php/ivr/menu-response']
             );
 
             $gather->play(
@@ -104,7 +104,7 @@ class IvrController extends Controller
         if ($actionExists) {
             $selectedAction = $optionActions[$selectedOption];
             error_log($selectedAction);
-               return "<Response>".$selectedAction."<Redirect>/ivr/welcome</Redirect></Response>";
+               return "<Response>".$selectedAction."<Redirect>https://enigmatic-castle-81076.herokuapp.com/index.php/ivr/welcome</Redirect></Response>";
 
         } else {
             $response = new Services_Twilio_Twiml;
@@ -112,7 +112,7 @@ class IvrController extends Controller
                 'Returning to the main menu',
                 ['voice' => 'Alice', 'language' => 'en-GB']
             );
-            $response->redirect(route('welcome', [], false));
+            $response->redirect('https://enigmatic-castle-81076.herokuapp.com/index.php/ivr/welcome');
 
             return $response;
         }
